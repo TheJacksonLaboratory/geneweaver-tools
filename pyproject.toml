@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "geneweaver-tools"
+version = "0.0.1a0"
+description = "A framework to allow for consistent implementation of tools for the GeneWeaver project."
+authors = ["Alexander Berger <alexander.berger@jax.org>"]
+readme = "README.md"
+license = "Apache-2.0"
+homepage = "https://bergsalex.github.io/geneweaver-docs/"
+repository = "https://github.com/bergsalex/geneweaver-tools"
+packages = [{include = "geneweaver/tools", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pydantic = "^1.10.7"
+
+[tool.poetry.group.dev.dependencies]
+geneweaver-testing = "^0.0.1a10"
+
+[tool.ruff]
+select = ['F', 'E', 'W', 'A', 'C90', 'N', 'B', 'ANN', 'D', 'I', 'ERA', 'PD', 'NPY', 'PT']
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
