@@ -1,35 +1,49 @@
+"""Abstract classes for tools."""
+
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from pydantic import BaseModel
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Type
+
 from .enum import WorkflowType
+from .schema import ToolInput, ToolOutput
 
 
 class AbstractTool(ABC):
+    """Abstract class for GeneWeaver tools."""
 
     @abstractmethod
-    def run(self, *args, **kwargs) -> str:
-        ...
-
-    @abstractmethod
-    def input(self) -> BaseModel:
-        ...
-
-    @abstractmethod
-    def output(self) -> BaseModel:
-        ...
+    def run(self: AbstractTool, tool_input: ToolInput) -> ToolOutput:
+        """Run the tool."""
 
     @property
     @abstractmethod
-    def static_files_location(self) -> Path:
-        ...
+    def tool_input(self: AbstractTool) -> Type[ToolInput]:
+        """Input schema for the tool."""
 
     @property
     @abstractmethod
-    def workflow_definition(self) -> Optional[str]:
-        ...
+    def tool_output(self: AbstractTool) -> Type[ToolOutput]:
+        """Output schema for the tool."""
 
     @property
-    @abstractmethod
-    def workflow_type(self) -> Optional[WorkflowType]:
-        ...
+    def tool_name(self: AbstractTool) -> str:
+        """Return the name of the tool."""
+        return self.__class__.__name__
+
+    @property
+    def static_files_location(self: AbstractTool) -> Path:
+        """Location of static files for the tool."""
+        return Path(__file__).parent / "static"
+
+    @property
+    def workflow_definition(self: AbstractTool) -> Optional[Path]:
+        """Location of workflow definition for the tool."""
+        workflow_path = Path(__file__).parent / "workflow.nf"
+        return workflow_path if workflow_path.is_file() else None
+
+    @property
+    def workflow_type(self: AbstractTool) -> Optional[WorkflowType]:
+        """The type of workflow used by workflow definition."""
+        return WorkflowType.NEXTFLOW
