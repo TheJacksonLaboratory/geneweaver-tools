@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
+import sys
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Optional, Type
+from typing import Type
 
-from .enum import WorkflowType
 from .schema import ToolInput, ToolOutput
 
 
@@ -35,15 +35,6 @@ class AbstractTool(ABC):
     @property
     def static_files_location(self: AbstractTool) -> Path:
         """Location of static files for the tool."""
-        return Path(__file__).parent / "static"
-
-    @property
-    def workflow_definition(self: AbstractTool) -> Optional[Path]:
-        """Location of workflow definition for the tool."""
-        workflow_path = Path(__file__).parent / "workflow.nf"
-        return workflow_path if workflow_path.is_file() else None
-
-    @property
-    def workflow_type(self: AbstractTool) -> Optional[WorkflowType]:
-        """The type of workflow used by workflow definition."""
-        return WorkflowType.NEXTFLOW
+        module = sys.modules[self.__class__.__module__]
+        module_path = Path(module.__file__).parent
+        return module_path / "static"
