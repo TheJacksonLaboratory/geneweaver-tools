@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "geneweaver-tools"
-version = "0.0.2a0"
+version = "0.0.2"
 description = "A framework to allow for consistent implementation of tools for the GeneWeaver project."
 authors = ["Alexander Berger <alexander.berger@jax.org>"]
 readme = "README.md"
