@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "geneweaver-tools"
-version = "0.0.4"
+version = "0.0.5"
 description = "A framework to allow for consistent implementation of tools for the GeneWeaver project."
 authors = ["Alexander Berger <alexander.berger@jax.org>"]
 readme = "README.md"
@@ -11,7 +11,7 @@ packages = [{include = "geneweaver/tools", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-geneweaver-core = "^0.9.1"
+geneweaver-core = "<1.0,>=0.9.1"
 
 [tool.poetry.group.dev.dependencies]
 geneweaver-testing = "^0.0.2"
